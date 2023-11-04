@@ -83,10 +83,27 @@ public:
 		return tensors[i][j][m][n];
 	}
 
-	// Revised Ma' convolution method to overloaded operators
+	// // Revised Ma' convolution method to overloaded operators
+	// Tensor4D<T> operator* (const Tensor4D<T>& B) {
+	// 	int64_t s = 1;
+	// 	Tensor4D<int> C(this->batch, B.batch, this->height - B.height + 1, this->width - B.width + 1);
+	// 	for(size_t i = 0; i < C.batch; ++i)
+	// 		for(int j = 0; j < C.channel; ++j)
+	// 			for(size_t m = 0; m < C.height; ++m)
+	// 				for(size_t n = 0; n < C.width; ++n)
+	// 					for(size_t r = 0; r < B.channel; ++r)
+	// 						for(size_t u = 0; u < B.height; ++u)
+	// 							for(size_t v = 0; v < B.width; ++v)
+	// 								C(i, j, m, n) += (*this)(i, r, m * s + u, n * s + v) * B(j, r, u, v);
+	// 	return C;
+	// }
+	
 	Tensor4D<T> operator* (const Tensor4D<T>& B) {
-		int64_t s = 1;
-		Tensor4D<int> C(this->batch, B.batch, this->height - B.height + 1, this->width - B.width + 1);
+		return convolutionWithStride(B, 1);
+	}
+
+	Tensor4D<T> convolutionWithStride (const Tensor4D<T>& B, uint64_t s) {
+		Tensor4D<T> C(this->batch, B.batch, (this->height - B.height) / s + 1, (this->width - B.width) / s + 1);
 		for(size_t i = 0; i < C.batch; ++i)
 			for(int j = 0; j < C.channel; ++j)
 				for(size_t m = 0; m < C.height; ++m)
