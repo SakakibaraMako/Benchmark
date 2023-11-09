@@ -1,3 +1,0 @@
-E:/Convolution Group/week 4/build/CMakeFiles/Run_and_Plot.dir
-E:/Convolution Group/week 4/build/CMakeFiles/edit_cache.dir
-E:/Convolution Group/week 4/build/CMakeFiles/rebuild_cache.dir
